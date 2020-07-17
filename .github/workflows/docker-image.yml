@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: |
+      master
+      develop
+  pull_request:
+    branches: |
+      master
+      develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    steps:
+      - uses: actions/checkout@v1.0
+        name: Check out code
+    
+      - uses: mr-smithers-excellent/docker-build-push@v3
+        name: Build & push Docker image
+        with:
+        image: repo/image
+        tag: latest
+        registry: oreopie.ipdisk.co.kr:5000
+        dockerfile: Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
