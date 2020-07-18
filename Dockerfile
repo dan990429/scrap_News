@@ -1,3 +1,3 @@
-FROM ubuntu
+FROM python
 
-RUN echo 'a'
+RUN python app.py
